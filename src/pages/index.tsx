@@ -1,115 +1,136 @@
-import Image from "next/image";
-import localFont from "next/font/local";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import classNames from "classnames";
+import CalcButton from "@/components/CalcButton";
+import React from "react";
 
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const resultInput = document.getElementById("result") as HTMLInputElement;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        const operator: string[] = ["+", "-", "*", "/"];
+
+        const inputArray = resultInput.innerText.split("");
+
+        // take last value of inputArray
+        const lastValue = inputArray[inputArray.length - 1];
+
+        if (!operator.includes(lastValue) && e.currentTarget.innerHTML === "=") {
+            resultInput.innerText = eval(inputArray.join(""));
+        } else if (e.currentTarget.innerHTML === "AC") {
+            resultInput.innerText = String(0);
+        } else if (e.currentTarget.innerHTML === "DEL") {
+            inputArray.pop();
+            resultInput.innerText = inputArray.join("");
+            if (resultInput.innerText.length == 0) {
+                resultInput.innerText = String(0);
+            }
+        } else if (e.currentTarget.innerHTML === "%") {
+            resultInput.innerText = (Number(resultInput.innerText) / 100).toString();
+        } else {
+
+
+
+            if (Number(resultInput.innerHTML) === 0) {
+                if (operator.includes(e.currentTarget.innerHTML)) {
+
+                } else {
+                    inputArray.pop();
+                }
+            }
+
+            if (operator.includes(lastValue) && !Number(e.currentTarget.innerHTML)) {
+                inputArray.pop();
+            }
+
+            inputArray.push(e.currentTarget.innerHTML.trim());
+
+            resultInput.innerText = inputArray.join("");
+        }
+    }
+
+    const comingSoon = () => {
+        alert("coming soon");
+    }
+
+    return (
+        <div className={classNames("flex flex-row justify-center items-center min-h-screen")}>
+            <div
+                className={classNames("flex flex-col gap-3 bg-white pb-8 mb-4 min-h-fit max-w-96 rounded-xl")}>
+                <div className={classNames("flex flex-col items-end bg-black rounded-t-md")}>
+                    <h1 id="result" className="text-4xl font-bold text-end py-4 px-4">0</h1>
+                </div>
+                <div className="flex flex-row gap-2 px-3 min-h-fit">
+                    <CalcButton id="AC" text="AC" backgroundColor="bg-gray-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-800"/>
+                    <CalcButton id="DEL" text="DEL" backgroundColor="bg-gray-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-800"/>
+                    <CalcButton id="%" text="%" backgroundColor="bg-gray-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-800"/>
+                    <CalcButton id="/" text="/" backgroundColor="bg-orange-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-orange-800"/>
+                </div>
+                <div className="flex flex-row gap-2 px-3 min-h-fit">
+                    <CalcButton id="7" text="7" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="8" text="8" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="9" text="9" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="*" text="*" backgroundColor="bg-orange-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-orange-800"/>
+                </div>
+                <div className="flex flex-row gap-2 px-3 min-h-fit">
+                    <CalcButton id="4" text="4" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="5" text="5" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="6" text="6" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="-" text="-" backgroundColor="bg-orange-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-orange-800"/>
+                </div>
+                <div className="flex flex-row gap-2 px-3 min-h-fit">
+                    <CalcButton id="1" text="1" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="2" text="2" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="3" text="3" backgroundColor="bg-gray-800" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-gray-900"/>
+                    <CalcButton id="+" text="+" backgroundColor="bg-orange-600" color="text-white"
+                                handleClick={handleClick}
+                                hoverBg="hover:bg-orange-800"/>
+                </div>
+                <div className="flex flex-row gap-2 px-3 justify-between min-h-fit min-w-full">
+                    <button onClick={comingSoon}
+                            className="rounded-full w-[65px] h-[65px] bg-gray-800 text-white hover:bg-gray-900"> Math
+                    </button>
+                    <div className="flex flex-row gap-2">
+                        <button onClick={handleClick} id="0"
+                                className="rounded-full w-[65px] h-[65px] bg-gray-800 text-white hover:bg-gray-900">0
+                        </button>
+                        <CalcButton id="." text="." backgroundColor="bg-gray-800" color="text-white"
+                                    handleClick={handleClick}
+                                    hoverBg="hover:bg-gray-900"/>
+                        <CalcButton id="=" text="=" backgroundColor="bg-orange-600" color="text-white"
+                                    handleClick={handleClick}
+                                    hoverBg="hover:bg-orange-800"/>
+                    </div>
+                </div>
+            </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
