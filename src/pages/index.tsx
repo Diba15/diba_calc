@@ -3,6 +3,37 @@ import CalcButton from "@/components/CalcButton";
 import React from "react";
 
 export default function Home() {
+    React.useEffect(() => {
+        const buttonId = ["AC", "DEL", "%", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "0", ".", "="];
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const key = e.key;
+
+            if (e.key === "Escape") {
+                const button = document.getElementById("AC") as HTMLButtonElement;
+                button.click();
+            }
+
+            if (e.key === "Backspace") {
+                const button = document.getElementById("DEL") as HTMLButtonElement;
+                button.click();
+            }
+
+            if (e.key === "Enter") {
+                const button = document.getElementById("=") as HTMLButtonElement;
+                button.click();
+            }
+
+            if (buttonId.includes(key)) {
+                const button = document.getElementById(key) as HTMLButtonElement;
+                button.click();
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    });
+
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const resultInput = document.getElementById("result") as HTMLInputElement;
 
@@ -26,7 +57,6 @@ export default function Home() {
         } else if (e.currentTarget.innerHTML === "%") {
             resultInput.innerText = (Number(resultInput.innerText) / 100).toString();
         } else {
-
 
 
             if (Number(resultInput.innerHTML) === 0) {
