@@ -1,4 +1,3 @@
-"use client"
 import classNames from "classnames";
 import Calc from "@/components/Calc"
 import History from "@/components/History"
