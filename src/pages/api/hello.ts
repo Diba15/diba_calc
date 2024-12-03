@@ -4,6 +4,20 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 // Initialize the Prisma Client
 const prisma = new PrismaClient();
 
+/**
+ * API handler for processing calculation requests.
+ *
+ * Supports only POST requests. Expects a JSON body with `expr` and `result` fields.
+ *
+ * - If `expr` and `result` are not provided, responds with a 400 Bad Request error.
+ * - On successful creation of a new calculation record in the database, responds with a 201 status and the created record.
+ * - Handles any errors by logging them and responding with a 500 Internal Server Error.
+ *
+ * For any unsupported HTTP methods, responds with a 405 Method Not Allowed error.
+ *
+ * @param req - The incoming request object.
+ * @param res - The outgoing response object.
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         try {
@@ -26,7 +40,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(201).json(newCalc);
         } catch (error) {
             console.error(error);
-            return res.status(500).json({error: 'Something went wrong'});
+            return res.status(500).json({
+                error: 'Something went wrong',
+                message: error,
+            });
         }
     } else {
         // Handle unsupported HTTP methods
