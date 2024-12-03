@@ -54,7 +54,7 @@ const History = ({calcs, setCalcs}: Props) => {
                 .then(r => r.json())
                 .then(() => {
                     console.log("Data Deleted");
-                    setCalcs(calcs.filter((calc) => calc.id !== id));
+                    setCalcs(calcs.filter((calc) => calc?.id !== id));
                 })
         } catch (e: unknown) {
             if (e instanceof Error) {
