@@ -70,11 +70,11 @@ const History = ({calcs, setCalcs}: Props) => {
                 {
                     calcs.map((calc) => (
                         <>
-                            <div key={calc.id} className={"flex flex-row justify-between"}>
+                            <div key={calc?.id} className={"flex flex-row justify-between"}>
                                 <h5 className={""}><code>{calc.expr}</code></h5>
                                 <h5><code>{calc.result}</code></h5>
                                 <h5>
-                                    <button onClick={() => deleteCalc(calc.id)}>Delete</button>
+                                    <button onClick={() => deleteCalc(calc?.id)}>Delete</button>
                                 </h5>
                             </div>
                             <hr/>
