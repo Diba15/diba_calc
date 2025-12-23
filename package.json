@@ -13,17 +13,10 @@
     "classnames": "^2.5.1",
     "mathjs": "^14.0.0",
     "motion": "^12.0.0-alpha.2",
-<<<<<<< HEAD
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "sqlite3": "latest",
-=======
-    "next": "15.0.7",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "sqlite3": "^5.1.7",
->>>>>>> 04961ac530fbd7ec4dfb393ae113e09e20f956ed
     "zod": "^3.23.8"
   },
   "devDependencies": {
