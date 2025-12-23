@@ -1,0 +1,13 @@
+interface CalcButtonModule {
+    backgroundColor: string,
+    color: string,
+    text: string
+}
+
+const CalcButton = ({backgroundColor, color, text}: CalcButtonModule) => {
+    return (
+        div
+    )
+}
+
+export default CalcButton;
